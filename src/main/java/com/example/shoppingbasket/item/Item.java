@@ -14,6 +14,10 @@ public class Item {
     private float itemPrice;
     private int amount;
 
+    public Item() {
+
+    }
+
     // constructor class for item
     protected Item(int itemID, String itemName, float itemPrice, int amount) {
         this.itemID = itemID;
@@ -23,7 +27,6 @@ public class Item {
     }
 
     // Following will be all Getter and Setter methods for the variables assigned in the constructor method
-
     public int getItemID() {
         return itemID;
     }
