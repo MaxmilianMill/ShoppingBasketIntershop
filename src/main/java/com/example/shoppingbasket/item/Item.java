@@ -1,14 +1,21 @@
 package com.example.shoppingbasket.item;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Item {
 
+    @Id
+    @GeneratedValue
     private int itemID;
     private String itemName;
     private float itemPrice;
     private int amount;
 
     // constructor class for item
-    public Item(int itemID, String itemName, float itemPrice, int amount) {
+    protected Item(int itemID, String itemName, float itemPrice, int amount) {
         this.itemID = itemID;
         this.itemName = itemName;
         this.itemPrice = itemPrice;

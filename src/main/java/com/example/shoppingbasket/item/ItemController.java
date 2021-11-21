@@ -5,21 +5,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-@RequestMapping(path = "api/v1/item")
+@RequestMapping(path = "api/v1")
 @RestController
 public class ItemController {
 
-    private final ItemApplication itemApplication;
-
     @Autowired
-    public ItemController(ItemApplication itemApplication) {
-        this.itemApplication = itemApplication;
-    }
+    ItemService itemService;
 
-    @GetMapping
-    public List<Item> getItems() {
-        return itemApplication.getItems();
+    @GetMapping("/item")
+    public Iterable<Item> getItems() {
+        return itemService.findAll();
     }
 }
