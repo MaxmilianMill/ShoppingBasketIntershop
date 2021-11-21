@@ -11,7 +11,6 @@ public class ItemConfig {
     CommandLineRunner commandLineRunner(ItemRepository itemRepository) {
         return args -> {
             Item jeans = new Item(
-                    1,
                     "Jeans",
                     49,
                     2

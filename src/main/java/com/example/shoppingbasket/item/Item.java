@@ -10,6 +10,7 @@ public class Item {
     @Id
     @GeneratedValue
     private int itemID;
+
     private String itemName;
     private float itemPrice;
     private int amount;
@@ -19,8 +20,7 @@ public class Item {
     }
 
     // constructor class for item
-    protected Item(int itemID, String itemName, float itemPrice, int amount) {
-        this.itemID = itemID;
+    protected Item(String itemName, float itemPrice, int amount) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.amount = amount;

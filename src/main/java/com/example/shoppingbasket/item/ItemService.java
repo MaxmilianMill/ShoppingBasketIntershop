@@ -59,4 +59,8 @@ public class ItemService {
     public void deleteAll() {
         itemRepository.deleteAll();
     }
+
+    public void addItem(Item item) {
+        System.out.println(item);
+    }
 }
