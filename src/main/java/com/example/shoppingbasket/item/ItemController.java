@@ -10,7 +10,7 @@ public class ItemController {
     @Autowired
     ItemService itemService;
 
-    @GetMapping("/item")
+    @GetMapping
     public Iterable<Item> getItems() {
         return itemService.findAll();
     }
@@ -18,5 +18,17 @@ public class ItemController {
     @PostMapping
     public void addNewItem(@RequestBody Item item) {
         itemService.addItem(item);
+    }
+
+    @DeleteMapping(path = "{itemID}")
+    public void deleteItem(@PathVariable("itemID") Integer itemID) {
+        itemService.deleteItem(itemID);
+    }
+
+    @PutMapping(path = "{itemID}")
+    public void updateItem(@PathVariable("itemID") Integer itemID,
+                           @RequestParam(required = false) Integer amount) {
+
+        itemService.updateItem(itemID, amount);
     }
 }

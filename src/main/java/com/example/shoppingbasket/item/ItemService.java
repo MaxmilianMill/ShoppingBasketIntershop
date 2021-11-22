@@ -3,7 +3,9 @@ package com.example.shoppingbasket.item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -61,6 +63,37 @@ public class ItemService {
     }
 
     public void addItem(Item item) {
-        System.out.println(item);
+        Optional<Item> itemOptional = itemRepository.findById(item.getItemID());
+
+        if (itemOptional.isPresent()) {
+            throw new IllegalStateException("Item has already been added");
+        }
+
+        itemRepository.save(item);
+    }
+
+    public void deleteItem(Integer itemID) {
+        boolean itemExists = itemRepository.existsById(itemID);
+
+        if (!itemExists) {
+
+            throw new IllegalStateException("Item with ID " + itemID + " does not exist");
+        }
+
+        itemRepository.deleteById(itemID);
+    }
+
+    @Transactional
+    public void updateItem(Integer itemID, Integer amount) {
+
+        Item item = itemRepository.findById(itemID)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Item with ID " + itemID + " does not exist"
+                ));
+
+        if (amount != null && amount > 0 && !Objects.equals(item.getAmount(), amount)) {
+
+            item.setAmount(amount);
+        }
     }
 }
