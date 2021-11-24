@@ -14,6 +14,7 @@ public class Item {
     private String itemName;
     private float itemPrice;
     private int amount;
+    private float sum;
 
     public Item() {
 
@@ -24,12 +25,11 @@ public class Item {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.amount = amount;
+        this.sum = (long) (this.itemPrice * this.amount);
     }
 
     // Following will be all Getter and Setter methods for the variables assigned in the constructor method
-    public int getItemID() {
-        return itemID;
-    }
+    public int getItemID() { return itemID; }
 
     public void setItemID(int itemID) {
         this.itemID = itemID;
@@ -57,5 +57,11 @@ public class Item {
 
     public void setAmount(int amount) {
         this.amount = amount;
+
+        setSum(amount * getItemPrice());
     }
+
+    public float getSum() { return sum; }
+
+    public void setSum(float sum) { this.sum = sum; }
 }

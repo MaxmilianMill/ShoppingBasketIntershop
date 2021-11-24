@@ -9,14 +9,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class ItemService {
+public class ItemService implements ItemRepository{
 
     @Autowired
     ItemRepository itemRepository;
 
-    public <S extends Item> S save(S entity) {
-        return itemRepository.save(entity);
-    }
+    public <S extends Item> S save(S entity) { return itemRepository.save(entity); }
 
     public <S extends Item> Iterable<S> saveAll(Iterable<S> entities) {
         return itemRepository.saveAll(entities);

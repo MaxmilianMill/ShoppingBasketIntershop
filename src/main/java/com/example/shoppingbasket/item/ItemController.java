@@ -1,31 +1,34 @@
 package com.example.shoppingbasket.item;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping(path = "api/v1")
+@RequestMapping
 @RestController
 public class ItemController {
 
     @Autowired
     ItemService itemService;
 
-    @GetMapping
+    @CrossOrigin(origins = "http://localhost:8080")
+    @GetMapping("/allItems")
     public Iterable<Item> getItems() {
         return itemService.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/addItem")
     public void addNewItem(@RequestBody Item item) {
         itemService.addItem(item);
     }
 
-    @DeleteMapping(path = "{itemID}")
+    @DeleteMapping(path = "/deleteItem/{itemID}")
     public void deleteItem(@PathVariable("itemID") Integer itemID) {
+
         itemService.deleteItem(itemID);
     }
 
-    @PutMapping(path = "{itemID}")
+    @PutMapping(path = "/updateItem/{itemID}")
     public void updateItem(@PathVariable("itemID") Integer itemID,
                            @RequestParam(required = false) Integer amount) {
 
