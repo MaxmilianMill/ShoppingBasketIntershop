@@ -73,7 +73,7 @@ public class ItemService implements ItemRepository{
     public void deleteItem(Integer itemID) {
         boolean itemExists = itemRepository.existsById(itemID);
 
-        if (!itemExists) {
+        if (itemExists) {
 
             throw new IllegalStateException("Item with ID " + itemID + " does not exist");
         }
