@@ -47,7 +47,7 @@ Content-Type: application/json
 DELETE: 
 - DELETE http://localhost:8080/deleteItem/2
 
-#Bibliotheken 
+**Bibliotheken** 
 
 Spring Boot Starter JPA: 
 - Kommunikation mit der Datenbank 
