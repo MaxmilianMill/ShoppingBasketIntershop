@@ -6,7 +6,7 @@ Framework: Spring Boot
 
 **Entwurfsmuster**
 
-Ich habe mich für ein 3-Schichten Modell entschieden, um verschiedene Arten von Funktionalität voneinander zu trennen. Jede LAyer kann so einfacher verändert oder ersetzt werden und
+Ich habe mich für ein 3-Schichten Modell entschieden, um verschiedene Arten von Funktionalität voneinander zu trennen. Jede Layer kann so einfacher verändert oder ersetzt werden und
 ist dabei unabhängig von den anderen Schichten. Ein weiterer Vorteil ist, das neue Controller über die gleiche Service Schicht auf die Daten zugreifen können, ohne dass die Logik verändert werden muss. 
 
 ![Entwurfsmuster](https://github.com/MaxmilianMill/ShoppingBasketIntershop/blob/master/src/main/resources/raw/Entwurfsmuster.png)
