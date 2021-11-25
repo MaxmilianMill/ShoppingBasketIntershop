@@ -8,12 +8,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+// service layer
 @Service
 public class ItemService implements ItemRepository{
 
+    // inject Repository functions to communicate with database
     @Autowired
     ItemRepository itemRepository;
 
+    // CRUD functions
     public <S extends Item> S save(S entity) { return itemRepository.save(entity); }
 
     public <S extends Item> Iterable<S> saveAll(Iterable<S> entities) {
@@ -60,6 +63,7 @@ public class ItemService implements ItemRepository{
         itemRepository.deleteAll();
     }
 
+    // add item into database if it has not been added yet
     public void addItem(Item item) {
         Optional<Item> itemOptional = itemRepository.findById(item.getItemID());
 
@@ -70,10 +74,11 @@ public class ItemService implements ItemRepository{
         itemRepository.save(item);
     }
 
+    // check if item exists and if so, delete it from database
     public void deleteItem(Integer itemID) {
         boolean itemExists = itemRepository.existsById(itemID);
 
-        if (itemExists) {
+        if (!itemExists) {
 
             throw new IllegalStateException("Item with ID " + itemID + " does not exist");
         }
@@ -81,6 +86,7 @@ public class ItemService implements ItemRepository{
         itemRepository.deleteById(itemID);
     }
 
+    // check if item exists in database
     @Transactional
     public void updateItem(Integer itemID, Integer amount) {
 
@@ -89,6 +95,7 @@ public class ItemService implements ItemRepository{
                         "Item with ID " + itemID + " does not exist"
                 ));
 
+        // if the new amount is different from the default, change it
         if (amount != null && amount > 0 && !Objects.equals(item.getAmount(), amount)) {
 
             item.setAmount(amount);

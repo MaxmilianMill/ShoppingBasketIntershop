@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+// implement CRUD calls in the application
 @EnableJpaRepositories(basePackages = {"pl.springBootStarter.app"})
 @Repository
 public interface ItemRepository extends CrudRepository<Item, Integer> {

@@ -3,19 +3,25 @@ package com.example.shoppingbasket.item;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+// rename table in database
+@Table(name = "ShoppingBasket")
 @Entity
 public class Item {
 
+    // primary key
     @Id
     @GeneratedValue
     private int itemID;
 
+    // columns
     private String itemName;
     private float itemPrice;
     private int amount;
     private float sum;
 
+    // empty constructor
     public Item() {
 
     }
@@ -55,10 +61,15 @@ public class Item {
         return amount;
     }
 
+    // set the amount if new amount is different and update also the sum column
     public void setAmount(int amount) {
-        this.amount = amount;
 
-        setSum(amount * getItemPrice());
+        if (this.amount != amount) {
+
+            this.amount = amount;
+
+            setSum(amount * getItemPrice());
+        }
     }
 
     public float getSum() { return sum; }

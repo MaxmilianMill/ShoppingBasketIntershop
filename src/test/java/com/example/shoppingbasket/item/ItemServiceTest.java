@@ -8,12 +8,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Objects;
 import java.util.Optional;
 
+// test service layer
 @ExtendWith(SpringExtension.class)
 class ItemServiceTest {
 
+    // mock Repository functions into Service layer
     @MockBean
     ItemRepository itemRepository;
 
+    // test save call --> create new item and save it into database
     @Test
     void save() {
 
@@ -23,6 +26,7 @@ class ItemServiceTest {
 
     }
 
+    // test addItem call --> create item check if the id is already in the database otherwise save the item
     @Test
     void addItem() {
 
@@ -37,20 +41,22 @@ class ItemServiceTest {
         itemRepository.save(item);
     }
 
+    // test deleteItem call --> check if ID exists and delete it
     @Test
     void deleteItem() {
 
         int itemID = 10;
         boolean itemExists = itemRepository.existsById(itemID);
 
+        // check if it does not exist
         if (itemExists) {
-
-            throw new IllegalStateException("Item with ID " + itemID + " already exists");
+            throw new IllegalStateException("Item with ID " + itemID + " does not exist");
         }
 
         itemRepository.deleteById(itemID);
     }
 
+    // test updateItem call --> create new item and check if the amount is different from the default
     @Test
     void updateItem() {
 

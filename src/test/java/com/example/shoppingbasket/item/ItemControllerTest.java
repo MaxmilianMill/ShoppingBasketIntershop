@@ -2,8 +2,6 @@ package com.example.shoppingbasket.item;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +20,20 @@ import static org.junit.jupiter.api.Assertions.*;
 @WebMvcTest(ItemController.class)
 class ItemControllerTest {
 
+    // function to convert object to string
     protected String mapToJson(Object obj) throws JsonProcessingException {
+
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(obj);
     }
 
+    // inject MockMvc
     @Autowired
     private MockMvc mvc;
 
+    // Mock Service Layer functions
     @MockBean
     ItemService itemService;
-
-    private final ItemController itemController = new ItemController();
 
     // check if we get all items from the database
     @Test
@@ -44,27 +44,37 @@ class ItemControllerTest {
 
         MvcResult result = mvc.perform(request).andReturn();
 
+        // check status of the request
         int status = result.getResponse().getStatus();
+        // if status equals 200 --> request was successful
         assertEquals(200, status);
 
         System.out.println("GET Request Successful! Status: " + status);
 
     }
 
+    // check if we can add a new item to the database
     @Test
     void addNewItem() throws Exception {
+        // new item
         Item item = new Item();
         item.setItemID(1);
         item.setItemName("Sneakers");
         item.setItemPrice(100);
         item.setAmount(2);
 
+        // convert item into string that can be used for request
         String input = mapToJson(item);
 
-        MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/addItem")
+        // send request
+        RequestBuilder request = MockMvcRequestBuilders.post("/addItem")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(input)).andReturn();
+                .content(input);
 
+        // get response
+        MvcResult result = mvc.perform(request).andReturn();
+
+        // check request status --> 200 = successful
         int status = result.getResponse().getStatus();
         assertEquals(200, status);
 
@@ -72,26 +82,42 @@ class ItemControllerTest {
 
     }
 
+    // check if we can delete an item
     @Test
     void deleteItem() throws Exception{
-        MvcResult result = mvc.perform(MockMvcRequestBuilders.delete("/deleteItem/1")).andReturn();
 
+        // send request
+        RequestBuilder request = MockMvcRequestBuilders.delete("/deleteItem/1");
+
+        // get response
+        MvcResult result = mvc.perform(request).andReturn();
+
+        // check status if its 200
         int status = result.getResponse().getStatus();
         assertEquals(200, status);
 
         System.out.println("DELETE Request Successful! Status: " + status);
     }
 
+    // check if we can update and existing item
     @Test
     void updateItem() throws Exception {
 
         Item item = new Item();
         item.setAmount(10);
 
+        // convert item data into string for http request
         String input = mapToJson(item);
 
-        MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/updateItem/1").contentType(MediaType.APPLICATION_JSON_VALUE).content(input)).andReturn();
+        // send request to update item 1
+        RequestBuilder request = MockMvcRequestBuilders.put("/updateItem/1")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(input);
 
+        // get the response
+        MvcResult result = mvc.perform(request).andReturn();
+
+        // check if the response was successful
         int status = result.getResponse().getStatus();
         assertEquals(200, status);
 
